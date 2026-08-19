@@ -1,26 +1,201 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --c-red: #d94141;
+  --c-orange: #c3804e;
+  --c-olive: #bba648;
+  --c-lime: #bfdb38;
+  --c-green: #24d564;
+  --c-teal: #3ba899;
+  --c-blueviolet: #617db0;
+  --c-lavender: #E6E6FA;
+  --c-bg: #0F0C29;
+  --c-bg-card: rgba(20, 16, 48, 0.7);
+  --c-border: rgba(230, 230, 250, 0.12);
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: var(--c-bg);
+  --foreground: var(--c-lavender);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--c-bg);
+  color: var(--c-lavender);
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   Optimized Pure CSS Ambient Background Shapes
+   ============================================ */
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.glow-orb-1 {
+  top: -10%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  max-width: 500px;
+  max-height: 500px;
+  background: radial-gradient(circle, var(--c-red) 0%, var(--c-orange) 60%, transparent 100%);
+  animation: float-1 18s ease-in-out infinite alternate;
+}
+
+.glow-orb-2 {
+  top: 30%;
+  right: -15%;
+  width: 55vw;
+  height: 55vw;
+  max-width: 550px;
+  max-height: 550px;
+  background: radial-gradient(circle, var(--c-teal) 0%, var(--c-blueviolet) 65%, transparent 100%);
+  animation: float-2 22s ease-in-out infinite alternate;
+}
+
+.glow-orb-3 {
+  bottom: -10%;
+  left: 20%;
+  width: 45vw;
+  height: 45vw;
+  max-width: 450px;
+  max-height: 450px;
+  background: radial-gradient(circle, var(--c-lime) 0%, var(--c-green) 70%, transparent 100%);
+  animation: float-3 20s ease-in-out infinite alternate;
+}
+
+@keyframes float-1 {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(40px, 60px, 0) scale(1.1); }
+}
+
+@keyframes float-2 {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(-50px, -40px, 0) scale(1.15); }
+}
+
+@keyframes float-3 {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(30px, -50px, 0) scale(0.95); }
+}
+
+/* ============================================
+   Glassmorphism & Border Lighting
+   ============================================ */
+
+.glass-card {
+  background: rgba(18, 14, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(230, 230, 250, 0.12);
+  box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.4);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(230, 230, 250, 0.25);
+}
+
+.pronunciation-card-glow {
+  background: linear-gradient(135deg, rgba(36, 213, 100, 0.12) 0%, rgba(59, 168, 153, 0.15) 50%, rgba(97, 125, 176, 0.12) 100%);
+  border: 1px solid rgba(36, 213, 100, 0.35);
+  box-shadow: 0 0 30px rgba(36, 213, 100, 0.15), inset 0 0 15px rgba(59, 168, 153, 0.1);
+  animation: glow-border 4s ease-in-out infinite alternate;
+}
+
+@keyframes glow-border {
+  0% {
+    border-color: rgba(36, 213, 100, 0.4);
+    box-shadow: 0 0 25px rgba(36, 213, 100, 0.15);
+  }
+  50% {
+    border-color: rgba(191, 219, 56, 0.5);
+    box-shadow: 0 0 35px rgba(191, 219, 56, 0.2);
+  }
+  100% {
+    border-color: rgba(59, 168, 153, 0.4);
+    box-shadow: 0 0 25px rgba(59, 168, 153, 0.15);
+  }
+}
+
+/* ============================================
+   Custom Text Gradients
+   ============================================ */
+
+.text-gradient-primary {
+  background: linear-gradient(135deg, #E6E6FA 20%, #3ba899 60%, #24d564 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-accent {
+  background: linear-gradient(135deg, #d94141 0%, #c3804e 50%, #bfdb38 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-lime {
+  background: linear-gradient(135deg, #bfdb38 0%, #24d564 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out both;
+}
+
+/* ============================================
+   Scrollbar & Selection
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0F0C29;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3ba899;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #24d564;
+}
+
+::selection {
+  background: rgba(36, 213, 100, 0.3);
+  color: #E6E6FA;
 }

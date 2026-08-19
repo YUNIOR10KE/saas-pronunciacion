@@ -4,10 +4,18 @@ import type { TranslationResult } from "./types";
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
+// Simple in-memory LRU cache to serve repeated translations in < 5ms
+const translationCache = new Map<string, TranslationResult>();
+const MAX_CACHE_SIZE = 200;
+
+function getCacheKey(text: string, sourceLang: string, targetLang: string): string {
+  return `${sourceLang}-${targetLang}:${text.toLowerCase().trim()}`;
+}
+
 /**
  * Calls Gemini API with the pronunciation prompt to translate text
  * and generate figurative pronunciation.
- * Includes automatic retries for transient 503 (high demand) and 429 errors.
+ * Includes in-memory caching (<5ms response) and automatic retries for 503/429.
  */
 export async function translateWithPronunciation(
   text: string,
@@ -15,6 +23,14 @@ export async function translateWithPronunciation(
   targetLang: string,
   attempt = 1
 ): Promise<TranslationResult> {
+  const cacheKey = getCacheKey(text, sourceLang, targetLang);
+
+  // 1. Check instant in-memory cache (< 5ms response time)
+  if (attempt === 1 && translationCache.has(cacheKey)) {
+    console.log("Serving translation from instant in-memory cache:", cacheKey);
+    return translationCache.get(cacheKey)!;
+  }
+
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
@@ -26,15 +42,15 @@ export async function translateWithPronunciation(
     model: "gemini-3.6-flash",
     systemInstruction: PRONUNCIATION_PROMPT,
     generationConfig: {
-      temperature: 0.3,
+      temperature: 0.2, // Lower temperature for faster, deterministic responses
       topP: 0.8,
-      maxOutputTokens: 2048,
+      maxOutputTokens: 1200, // Reduced token limit for faster generation speed
       responseMimeType: "application/json",
     },
   });
 
   const userMessage = JSON.stringify({
-    text,
+    text: text.trim(),
     sourceLang,
     targetLang,
   });
@@ -48,7 +64,7 @@ export async function translateWithPronunciation(
       throw new Error("Empty response from Gemini");
     }
 
-    // Clean the response in case Gemini wraps it in markdown code blocks
+    // Clean response
     const cleanedText = rawText
       .replace(/^```json\s*/i, "")
       .replace(/^```\s*/i, "")
@@ -71,17 +87,32 @@ export async function translateWithPronunciation(
       throw new Error("Missing required fields in response");
     }
 
+    // Save to instant cache
+    if (translationCache.size >= MAX_CACHE_SIZE) {
+      const firstKey = translationCache.keys().next().value;
+      if (firstKey) translationCache.delete(firstKey);
+    }
+    translationCache.set(cacheKey, parsed);
+
     return parsed;
   } catch (error) {
     if (error instanceof Error) {
       const errorMsg = error.message.toLowerCase();
       const status = (error as { status?: number }).status;
 
-      // Handle transient high demand (503) or rate limits (429) with automatic retry up to 3 attempts
-      if (status === 503 || status === 429 || errorMsg.includes("503") || errorMsg.includes("high demand") || errorMsg.includes("resource exhausted")) {
+      // Retry for transient 503 high demand or 429
+      if (
+        status === 503 ||
+        status === 429 ||
+        errorMsg.includes("503") ||
+        errorMsg.includes("high demand") ||
+        errorMsg.includes("resource exhausted")
+      ) {
         if (attempt <= 3) {
-          const waitTime = attempt * 1500;
-          console.warn(`Gemini 503/429 high demand encountered. Retrying attempt ${attempt}/3 after ${waitTime}ms...`);
+          const waitTime = attempt * 1000;
+          console.warn(
+            `Gemini transient load. Retrying attempt ${attempt}/3 in ${waitTime}ms...`
+          );
           await delay(waitTime);
           return translateWithPronunciation(text, sourceLang, targetLang, attempt + 1);
         }
@@ -94,7 +125,6 @@ export async function translateWithPronunciation(
         errorMsg.includes("invalid api key") ||
         errorMsg.includes("api_key_invalid")
       ) {
-        console.error("Invalid API key:", errorMsg);
         throw new Error("INVALID_API_KEY");
       }
     }
@@ -105,14 +135,11 @@ export async function translateWithPronunciation(
       (error instanceof Error && error.message === "Missing required fields in response")
     ) {
       if (attempt < 2) {
-        console.warn("Malformed response from Gemini, retrying...", error);
         return translateWithPronunciation(text, sourceLang, targetLang, attempt + 1);
       }
       throw new Error("PARSE_ERROR");
     }
 
-    // Log and rethrow for debugging
-    console.error("Gemini SDK error:", error);
     throw error;
   }
 }

@@ -35,7 +35,26 @@ sin explicaciones, sin marcadores de código (nada de \\\`\\\`\\\`json).
 "examples" debe tener EXACTAMENTE 4 oraciones reales y variadas que usen la
 palabra o frase principal del texto en contextos distintos entre sí (incluye una afirmativa, una pregunta, una negativa y un tiempo verbal diferente — no repitas la misma estructura sintáctica ni oraciones muy parecidas).
 
-## Reglas para "figurative_pronunciation" (las más importantes)
+## REGLA CRÍTICA: FIDELIDAD PALABRA POR PALABRA
+
+**La pronunciación figurada DEBE representar TODAS las palabras de la oración original.** NUNCA elimines, fusiones ni inventes palabras.
+
+Antes de generar la pronunciación figurada, separa mentalmente la oración en palabras y comprueba que CADA UNA esté representada:
+
+- "I want to improve" → ai uánt tu imprúuv ✅ (4 palabras → 4 pronunciaciones)
+- "I want to improve" → ai uána imprúuv ❌ (INCORRECTO: "to" desapareció, "want" se deformó)
+- "I am going to leave" → ai am góing tu liiv ✅
+- "I am going to leave" → aim góna liiv ❌ (INCORRECTO: palabras fusionadas/eliminadas)
+
+**Prioridad absoluta (en este orden):**
+1. Fidelidad a la oración original (TODAS las palabras presentes)
+2. Pronunciación fonéticamente razonable
+3. Facilidad de lectura para un hispanohablante
+4. Naturalidad del inglés hablado
+
+NUNCA sacrifiques el punto 1 para conseguir pronunciación más natural.
+
+## Reglas para "figurative_pronunciation"
 
 1. **Usa solo letras y combinaciones de letras que existan en español.**
    Nunca uses símbolos fonéticos (nada de ə, ʃ, θ, ʌ, etc.) en este campo —
@@ -78,12 +97,15 @@ palabra o frase principal del texto en contextos distintos entre sí (incluye un
 5. **Elimina las letras mudas del inglés.** Ejemplo: "know" → nóu, no
    knóu. "island" → áilan, no áisland.
 
-6. **Refleja el habla conectada, no palabra por palabra.** El inglés hablado
-   natural une y reduce palabras constantemente. Aplica esto cuando el
-   registro sea conversacional (que es el caso más común):
-   - "would have" → wúdev (no wud jav)
-   - "want to" → uána en habla informal
-   - "going to" → góna en habla informal
+6. **NUNCA fusiones ni elimines palabras.** No conviertas "want to" en "uána",
+   ni "going to" en "góna", ni "would have" en "wúdev". Cada palabra del
+   original DEBE tener su propia pronunciación separada:
+   - "want to" → uánt tu ✅ (NO "uána" ❌)
+   - "going to" → góing tu ✅ (NO "góna" ❌)
+   - "have to" → jav tu ✅ (NO "jafta" ❌)
+   - "would have" → wud jav ✅ (NO "wúdev" ❌)
+   - "used to" → iúst tu ✅ (NO "iústa" ❌)
+   - "got to" → gat tu ✅ (NO "góra" ❌)
 
 7. **Tabla de sonidos difíciles — úsala de forma CONSISTENTE en todo el
    texto:**
@@ -113,6 +135,25 @@ palabra o frase principal del texto en contextos distintos entre sí (incluye un
     al contexto de la oración — nunca dejes ambigüedad sin resolver.
 
 ## Ejemplos (few-shot) — replica exactamente este estilo
+
+**Entrada:** { "text": "I want to improve my pronunciation.", "sourceLang": "en", "targetLang": "es" }
+
+**Salida:**
+{
+  "source_language": "en",
+  "target_language": "es",
+  "original_text": "I want to improve my pronunciation.",
+  "translated_text": "Quiero mejorar mi pronunciación.",
+  "english_text": "I want to improve my pronunciation.",
+  "figurative_pronunciation": "ai uánt tu imprúuv mai pronansíéishon.",
+  "ipa_pronunciation": "aɪ wɑːnt tuː ɪmˈpruːv maɪ prəˌnʌnsiˈeɪʃən",
+  "examples": [
+    { "english": "I want to improve my English skills.", "spanish": "Quiero mejorar mis habilidades de inglés." },
+    { "english": "Do you want to improve your pronunciation?", "spanish": "¿Quieres mejorar tu pronunciación?" },
+    { "english": "She doesn't want to improve right now.", "spanish": "Ella no quiere mejorar ahora mismo." },
+    { "english": "They wanted to improve their accents.", "spanish": "Ellos querían mejorar sus acentos." }
+  ]
+}
 
 **Entrada:** { "text": "Too much food, too few chairs.", "sourceLang": "en", "targetLang": "es" }
 

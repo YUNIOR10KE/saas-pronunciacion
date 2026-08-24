@@ -28,18 +28,12 @@ sin explicaciones, sin marcadores de código (nada de \\\`\\\`\\\`json).
     { "english": "oración de ejemplo 1", "spanish": "su traducción" },
     { "english": "oración de ejemplo 2", "spanish": "su traducción" },
     { "english": "oración de ejemplo 3", "spanish": "su traducción" },
-    { "english": "oración de ejemplo 4", "spanish": "su traducción" },
-    { "english": "oración de ejemplo 5", "spanish": "su traducción" },
-    { "english": "oración de ejemplo 6", "spanish": "su traducción" },
-    { "english": "oración de ejemplo 7", "spanish": "su traducción" },
-    { "english": "oración de ejemplo 8", "spanish": "su traducción" },
-    { "english": "oración de ejemplo 9", "spanish": "su traducción" },
-    { "english": "oración de ejemplo 10", "spanish": "su traducción" }
+    { "english": "oración de ejemplo 4", "spanish": "su traducción" }
   ]
 }
 
-"examples" debe tener MÍNIMO 10 oraciones reales y variadas que usen la
-palabra o frase principal del texto en contextos distintos entre sí (varía entre oraciones afirmativas, preguntas, negativas y diferentes tiempos verbales — no repitas la misma estructura sintáctica ni oraciones muy parecidas).
+"examples" debe tener EXACTAMENTE 4 oraciones reales y variadas que usen la
+palabra o frase principal del texto en contextos distintos entre sí (incluye una afirmativa, una pregunta, una negativa y un tiempo verbal diferente — no repitas la misma estructura sintáctica ni oraciones muy parecidas).
 
 ## Reglas para "figurative_pronunciation" (las más importantes)
 
@@ -134,14 +128,8 @@ palabra o frase principal del texto en contextos distintos entre sí (varía ent
   "examples": [
     { "english": "There was too much food at the party.", "spanish": "Había demasiada comida en la fiesta." },
     { "english": "Is there too much food?", "spanish": "¿Hay demasiada comida?" },
-    { "english": "We have too few chairs for everyone.", "spanish": "Tenemos muy pocas sillas para todos." },
-    { "english": "Why are there too few chairs here?", "spanish": "¿Por qué hay tan pocas sillas aquí?" },
     { "english": "Don't bring too much food.", "spanish": "No traigas demasiada comida." },
-    { "english": "They brought too few chairs.", "spanish": "Ellos trajeron muy pocas sillas." },
-    { "english": "I ate too much food yesterday.", "spanish": "Comí demasiada comida ayer." },
-    { "english": "Will there be too few chairs?", "spanish": "¿Habrá muy pocas sillas?" },
-    { "english": "She noticed there was too much food.", "spanish": "Ella notó que había demasiada comida." },
-    { "english": "Too few chairs were available.", "spanish": "Había muy pocas sillas disponibles." }
+    { "english": "We had too few chairs last time.", "spanish": "Tuvimos muy pocas sillas la última vez." }
   ]
 }
 
@@ -157,16 +145,10 @@ palabra o frase principal del texto en contextos distintos entre sí (varía ent
   "figurative_pronunciation": "ai niid en ápol en e banána.",
   "ipa_pronunciation": "aɪ niːd ən ˈæpəl ən ə bəˈnænə",
   "examples": [
+    { "english": "I need an apple and a banana.", "spanish": "Necesito una manzana y un plátano." },
     { "english": "Do you need an apple and a banana?", "spanish": "¿Necesitas una manzana y un plátano?" },
     { "english": "I don't need an apple today.", "spanish": "No necesito una manzana hoy." },
-    { "english": "She asked for an apple and a banana.", "spanish": "Ella pidió una manzana y un plátano." },
-    { "english": "Buy an apple and a banana at the store.", "spanish": "Compra una manzana y un plátano en la tienda." },
-    { "english": "Did he bring an apple and a banana?", "spanish": "¿Él trajo una manzana y un plátano?" },
-    { "english": "An apple and a banana make a great snack.", "spanish": "Una manzana y un plátano hacen un excelente bocadillo." },
-    { "english": "I always eat an apple and a banana.", "spanish": "Siempre como una manzana y un plátano." },
-    { "english": "Would you like an apple or a banana?", "spanish": "¿Te gustaría una manzana o un plátano?" },
-    { "english": "We needed an apple for the recipe.", "spanish": "Necesitábamos una manzana para la receta." },
-    { "english": "He gave me an apple and a banana.", "spanish": "Él me dio una manzana y un plátano." }
+    { "english": "She asked for an apple and a banana.", "spanish": "Ella pidió una manzana y un plátano." }
   ]
 }
 
@@ -185,13 +167,7 @@ palabra o frase principal del texto en contextos distintos entre sí (varía ent
     { "english": "Please wait for the bus here.", "spanish": "Por favor espera el autobús aquí." },
     { "english": "Are you waiting for the bus?", "spanish": "¿Estás esperando el autobús?" },
     { "english": "Don't wait for the bus, take a taxi.", "spanish": "No esperes el autobús, toma un taxi." },
-    { "english": "We waited for the bus for an hour.", "spanish": "Esperamos el autobús durante una hora." },
-    { "english": "Why should I wait for the bus?", "spanish": "¿Por qué debería esperar el autobús?" },
-    { "english": "She will wait for the bus at the stop.", "spanish": "Ella esperará el autobús en la parada." },
-    { "english": "They are waiting for the bus outside.", "spanish": "Ellos están esperando el autobús afuera." },
-    { "english": "Did you wait for the bus this morning?", "spanish": "¿Esperaste el autobús esta mañana?" },
-    { "english": "Always wait for the bus to stop.", "spanish": "Siempre espera a que el autobús se detenga." },
-    { "english": "I didn't wait for the bus.", "spanish": "No esperé el autobús." }
+    { "english": "We waited for the bus for an hour.", "spanish": "Esperamos el autobús durante una hora." }
   ]
 }
 
@@ -208,14 +184,8 @@ palabra o frase principal del texto en contextos distintos entre sí (varía ent
   "ipa_pronunciation": "jɛs, wɛl, aɪd laɪk ən ˌɛkspləˈneɪʃən ɪf ɪts nɑt tuː mʌtʃ ˈtrʌbəl",
   "examples": [
     { "english": "I'd like an explanation, please.", "spanish": "Me gustaría una explicación, por favor." },
-    { "english": "Lieutenant, I'd like an explanation.", "spanish": "Teniente, me gustaría una explicación." },
-    { "english": "She gave a long explanation for being late.", "spanish": "Ella dio una larga explicación por llegar tarde." },
     { "english": "Can you give me an explanation?", "spanish": "¿Puedes darme una explicación?" },
     { "english": "I don't need an explanation.", "spanish": "No necesito una explicación." },
-    { "english": "What is the explanation for this?", "spanish": "¿Cuál es la explicación de esto?" },
-    { "english": "He asked for an explanation immediately.", "spanish": "Él pidió una explicación inmediatamente." },
-    { "english": "Will she provide an explanation?", "spanish": "¿Ella proporcionará una explicación?" },
-    { "english": "There is no simple explanation.", "spanish": "No hay una explicación sencilla." },
-    { "english": "They demanded an explanation.", "spanish": "Ellos exigieron una explicación." }
+    { "english": "She gave a long explanation for being late.", "spanish": "Ella dio una larga explicación por llegar tarde." }
   ]
 }`;

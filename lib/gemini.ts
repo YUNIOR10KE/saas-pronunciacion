@@ -39,7 +39,7 @@ export async function translateWithPronunciation(
 
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({
-    model: "gemini-3.6-flash",
+    model: "gemini-2.0-flash",
     systemInstruction: PRONUNCIATION_PROMPT,
     generationConfig: {
       temperature: 0.2, // Lower temperature for faster, deterministic responses

@@ -86,13 +86,27 @@ NUNCA sacrifiques el punto 1 para conseguir pronunciación más natural.
    |---|---|---|
    | a | e | éi |
    | an | en | an |
-   | the | de (+consonante) / di (+vocal) | dii |
-   | of | ev | af |
+   | the | da (+consonante) / di (+vocal) | dii |
+   | of | ov | of |
    | to | tu | tuu |
    | for | fer | fór |
    | and | en / an | and |
+   | he | i | jii |
+   | him | im | jim |
+   | his | is | jis |
+   | her | er | jer |
+   | have | av / ev | jav |
+   | has | as / es | jas |
+   | had | ad / ed | jad |
 
    **Regla:** estas palabras van casi siempre en su **forma débil**, salvo que estén aisladas, deletreadas, o el hablante las enfatice a propósito.
+
+   **Regla de la H muda en palabras función:** En el habla natural y conectada, las palabras función que empiezan con "h" (he, him, his, her, have, has, had) CASI SIEMPRE pierden la "h" — la "h" NO se pronuncia. Usa la forma débil SIN "j" inicial:
+   - "He told me" → i tóld mi ✅ (NO "jii tóuld mii" ❌)
+   - "Tell him" → tel im ✅ (NO "tel jim" ❌)
+   - "I saw her" → ai so er ✅ (NO "ai so jer" ❌)
+   - "I have seen" → ai av siin ✅ (NO "ai jav siin" ❌)
+   SOLO usa la forma fuerte con "j" cuando la palabra está al inicio absoluto de una oración Y lleva énfasis especial, o cuando está aislada.
 
 5. **Elimina las letras mudas del inglés.** Ejemplo: "know" → nóu, no
    knóu. "island" → áilan, no áisland.
@@ -121,16 +135,22 @@ NUNCA sacrifiques el punto 1 para conseguir pronunciación más natural.
    | v (very) | very | v — aunque suene igual que "b" en español, escríbelo distinto para que el usuario intente diferenciarlo |
    | r inglesa (red) | red | r — NO es la r española, no vibra, la lengua no toca el paladar |
    | ng (sing) | sing | ng |
-   | h aspirada (house) | house | j |
+   | h aspirada (house) | house | j — SOLO en palabras de contenido (house, happy, hot). En palabras función (he, him, her, his, have, has, had) la h NO se pronuncia, ver regla de formas débiles |
    | w (west) | west | u |
+   | with | with | wid — NUNCA "uid". La w se pronuncia como u+i rápido, y th sonora final suena como d |
 
-8. **Conserva la puntuación** del texto original (comas, puntos, signos de
+8. **Pronunciación de vocales en palabras comunes:** Presta atención especial a estas palabras que los hispanohablantes suelen pronunciar mal:
+   - "told / old / cold / bold" → la "o" es un diptongo /oʊ/ que suena como "ó" (NO "óu" separado): tóld, óld, kóld, bóld
+   - "truth" → la th final es sorda, suena como una "z" suave: truuz
+   - "with" → SIEMPRE "wid", nunca "uid" ni "wiz"
+
+9. **Conserva la puntuación** del texto original (comas, puntos, signos de
    interrogación) en la misma posición.
 
-9. **Todo en minúsculas**, excepto nombres propios. Los acentos marcan la
+10. **Todo en minúsculas**, excepto nombres propios. Los acentos marcan la
    sílaba tónica, no el inicio de oración.
 
-10. Si una palabra tiene más de una pronunciación válida según el contexto
+11. Si una palabra tiene más de una pronunciación válida según el contexto
     (por ejemplo "read" en presente vs. pasado), elige la que corresponda
     al contexto de la oración — nunca dejes ambigüedad sin resolver.
 
@@ -202,7 +222,7 @@ NUNCA sacrifiques el punto 1 para conseguir pronunciación más natural.
   "original_text": "Wait for the bus.",
   "translated_text": "Espera el autobús.",
   "english_text": "Wait for the bus.",
-  "figurative_pronunciation": "uéit fer de bas.",
+  "figurative_pronunciation": "uéit fer da bas.",
   "ipa_pronunciation": "weɪt fər ðə bʌs",
   "examples": [
     { "english": "Please wait for the bus here.", "spanish": "Por favor espera el autobús aquí." },
@@ -228,5 +248,24 @@ NUNCA sacrifiques el punto 1 para conseguir pronunciación más natural.
     { "english": "Can you give me an explanation?", "spanish": "¿Puedes darme una explicación?" },
     { "english": "I don't need an explanation.", "spanish": "No necesito una explicación." },
     { "english": "She gave a long explanation for being late.", "spanish": "Ella dio una larga explicación por llegar tarde." }
+  ]
+}
+
+**Entrada:** { "text": "He told me sweet lies of sweet loves, heavy with the burden of the truth.", "sourceLang": "en", "targetLang": "es" }
+
+**Salida:**
+{
+  "source_language": "en",
+  "target_language": "es",
+  "original_text": "He told me sweet lies of sweet loves, heavy with the burden of the truth.",
+  "translated_text": "Él me dijo dulces mentiras de dulces amores, cargadas con el peso de la verdad.",
+  "english_text": "He told me sweet lies of sweet loves, heavy with the burden of the truth.",
+  "figurative_pronunciation": "i tóld mi suiit láiz ov suiit lavs, jévi wid da bérden ov da truuz.",
+  "ipa_pronunciation": "hi toʊld mi swiːt laɪz əv swiːt lʌvz, ˈhɛvi wɪð ðə ˈbɜːrdən əv ðə truːθ",
+  "examples": [
+    { "english": "He told me the truth about everything.", "spanish": "Él me dijo la verdad sobre todo." },
+    { "english": "Did he tell you sweet lies too?", "spanish": "¿A ti también te dijo dulces mentiras?" },
+    { "english": "She never told me about the burden.", "spanish": "Ella nunca me contó sobre la carga." },
+    { "english": "They had told us sweet lies for years.", "spanish": "Nos habían dicho dulces mentiras durante años." }
   ]
 }`;

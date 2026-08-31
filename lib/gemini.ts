@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
 import { PRONUNCIATION_PROMPT } from "./prompts";
 import type { TranslationResult } from "./types";
 
@@ -37,17 +37,7 @@ export async function translateWithPronunciation(
     throw new Error("GEMINI_API_KEY is not configured");
   }
 
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash",
-    systemInstruction: PRONUNCIATION_PROMPT,
-    generationConfig: {
-      temperature: 0.2, // Lower temperature for faster, deterministic responses
-      topP: 0.8,
-      maxOutputTokens: 1200, // Reduced token limit for faster generation speed
-      responseMimeType: "application/json",
-    },
-  });
+  const ai = new GoogleGenAI({ apiKey });
 
   const userMessage = JSON.stringify({
     text: text.trim(),
@@ -56,11 +46,22 @@ export async function translateWithPronunciation(
   });
 
   try {
-    const result = await model.generateContent(userMessage);
-    const response = result.response;
-    const rawText = response.text();
+    const response = await ai.models.generateContent({
+      model: "gemini-3.6-flash",
+      contents: userMessage,
+      config: {
+        systemInstruction: PRONUNCIATION_PROMPT,
+        temperature: 0.2,
+        topP: 0.8,
+        maxOutputTokens: 2048,
+        responseMimeType: "application/json",
+      },
+    });
+
+    const rawText = response.text;
 
     if (!rawText) {
+      console.error("Empty response from Gemini. Full response:", JSON.stringify(response));
       throw new Error("Empty response from Gemini");
     }
 
@@ -71,7 +72,13 @@ export async function translateWithPronunciation(
       .replace(/\s*```$/i, "")
       .trim();
 
-    const parsed: TranslationResult = JSON.parse(cleanedText);
+    let parsed: TranslationResult;
+    try {
+      parsed = JSON.parse(cleanedText);
+    } catch (parseErr) {
+      console.error("JSON parse failed. Raw text:", rawText.substring(0, 500));
+      throw parseErr;
+    }
 
     // Validate required fields
     if (
@@ -84,6 +91,7 @@ export async function translateWithPronunciation(
       !parsed.ipa_pronunciation ||
       !Array.isArray(parsed.examples)
     ) {
+      console.error("Missing fields. Got:", Object.keys(parsed));
       throw new Error("Missing required fields in response");
     }
 
@@ -135,6 +143,7 @@ export async function translateWithPronunciation(
       (error instanceof Error && error.message === "Missing required fields in response")
     ) {
       if (attempt < 2) {
+        console.warn("Parse error, retrying attempt 2...");
         return translateWithPronunciation(text, sourceLang, targetLang, attempt + 1);
       }
       throw new Error("PARSE_ERROR");
